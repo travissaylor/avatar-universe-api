@@ -23,7 +23,7 @@ export class CharactersController {
 
   @Get()
   async find(
-    @Query('take') take?: number,
+    @Query('take') take = 10,
     @Query('skip') skip?: number,
     @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
   ) {

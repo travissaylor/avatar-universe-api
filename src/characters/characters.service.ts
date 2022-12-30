@@ -19,7 +19,7 @@ export class CharactersService {
     skip?: number;
     orderBy?: Prisma.CharacterOrderByWithRelationInput;
   }) {
-    const { take = 10, skip, orderBy } = params;
+    const { take, skip, orderBy } = params;
     return await this.prisma.character.findMany({
       take: Number(take) || undefined,
       skip: Number(skip) || undefined,

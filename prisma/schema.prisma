@@ -25,6 +25,7 @@ model Character {
   predecessor String?
   affiliation String?
   first       String?
+  last        String?
   voiced      String?
   nationality String?
   ethnicity   String?

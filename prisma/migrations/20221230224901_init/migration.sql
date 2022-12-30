@@ -14,6 +14,7 @@ CREATE TABLE "Character" (
     "predecessor" TEXT,
     "affiliation" TEXT,
     "first" TEXT,
+    "last" TEXT,
     "voiced" TEXT,
     "nationality" TEXT,
     "ethnicity" TEXT

@@ -41,7 +41,7 @@ export class ScraperService {
     try {
       await fs.writeFile(
         'prisma/characters.json',
-        JSON.stringify(characterData),
+        JSON.stringify(characterData, null, 2),
         'utf8',
       );
     } catch (e) {
@@ -93,11 +93,20 @@ export class ScraperService {
 
     const character: Partial<Character> = {
       photoUrl: parsedPhotoSrc,
+      name,
     };
 
     parsedLabels.forEach((label, i) => {
       character[label.split(' ')[0].toLowerCase()] = parsedValues[i];
     });
+
+    if (character.first) {
+      character.first = character.first.replace(/"/g, '');
+    }
+
+    if (character.last) {
+      character.last = character.last.replace(/"/g, '');
+    }
 
     return character;
   }

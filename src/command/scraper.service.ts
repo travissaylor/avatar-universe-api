@@ -1,5 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { Character } from '@prisma/client';
 import { load, CheerioAPI, Element } from 'cheerio';
 // import pretty from 'pretty';
 
@@ -21,7 +22,17 @@ export class ScraperService {
   }
 
   async getCharactersFromNames(names: string[]) {
-    return this.scrapeCharacter(names[0]);
+    const PromiseResults = await Promise.allSettled(
+      names.map((name) => this.scrapeCharacter(name)),
+    );
+
+    return PromiseResults.map((result) => {
+      if (result.status === 'fulfilled') {
+        return result.value;
+      }
+
+      return null;
+    }).filter((item) => item !== null);
   }
 
   private async scrapeNameChunk(query = '') {
@@ -64,7 +75,17 @@ export class ScraperService {
       })
       .toArray();
 
-    console.log({ name, parsedLabels, parsedValues });
+    const parsedPhotoSrc = photoInfo.attr('src');
+
+    const character: Partial<Character> = {
+      photoUrl: parsedPhotoSrc,
+    };
+
+    parsedLabels.forEach((label, i) => {
+      character[label.split(' ')[0].toLowerCase()] = parsedValues[i];
+    });
+
+    return character;
   }
 
   private extractListItemValues($: CheerioAPI, element: Element) {

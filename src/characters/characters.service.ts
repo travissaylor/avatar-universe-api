@@ -27,6 +27,24 @@ export class CharactersService {
     });
   }
 
+  async findAvatars(params: {
+    take?: number;
+    skip?: number;
+    orderBy?: Prisma.CharacterOrderByWithRelationInput;
+  }) {
+    const { take, skip, orderBy } = params;
+    return await this.prisma.character.findMany({
+      take: Number(take) || undefined,
+      skip: Number(skip) || undefined,
+      orderBy: orderBy,
+      where: {
+        profession: {
+          startsWith: 'Avatar',
+        },
+      },
+    });
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} character`;
   }

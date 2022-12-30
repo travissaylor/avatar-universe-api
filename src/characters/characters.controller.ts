@@ -34,6 +34,19 @@ export class CharactersController {
     });
   }
 
+  @Get('/avatar')
+  async findAvatars(
+    @Query('take') take?: number,
+    @Query('skip') skip?: number,
+    @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
+  ) {
+    return this.charactersService.findAvatars({
+      take,
+      skip,
+      orderBy: { id: orderBy },
+    });
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.charactersService.findOne(+id);

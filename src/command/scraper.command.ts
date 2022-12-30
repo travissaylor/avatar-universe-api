@@ -10,6 +10,9 @@ export class ScraperRunner extends CommandRunner {
   }
   async run(): Promise<void> {
     const names = await this.scraperService.getNames();
-    console.log(names);
+    const characterData = await this.scraperService.getCharactersFromNames(
+      names,
+    );
+    console.log(characterData);
   }
 }

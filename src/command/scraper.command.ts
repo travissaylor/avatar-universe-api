@@ -15,5 +15,7 @@ export class ScraperRunner extends CommandRunner {
       names,
     );
     console.log('Characters Finished', characterData.length);
+    this.scraperService.persistCharacterData(characterData);
+    console.log('DONE');
   }
 }

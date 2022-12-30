@@ -2,6 +2,8 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { Character } from '@prisma/client';
 import { load, CheerioAPI, Element } from 'cheerio';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 // import pretty from 'pretty';
 
 @Injectable()
@@ -33,6 +35,18 @@ export class ScraperService {
 
       return null;
     }).filter((item) => item !== null);
+  }
+
+  async persistCharacterData(characterData: Partial<Character>[]) {
+    try {
+      await fs.writeFile(
+        'prisma/characters.json',
+        JSON.stringify(characterData),
+        'utf8',
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private async scrapeNameChunk(query = '') {

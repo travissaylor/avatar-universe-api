@@ -11,19 +11,21 @@ generator client {
 }
 
 model Character {
-  id          Int    @id @default(autoincrement())
-  photoUrl    String
+  id          Int     @id @default(autoincrement())
+  photoUrl    String?
   name        String
-  gender      String
-  eye         String
-  hair        String
-  skin        String
-  love        String
-  weapon      String
-  profession  String
-  position    String
-  predecessor String
-  affiliation String
-  first       String
-  voicedBy    String
+  gender      String?
+  eye         String?
+  hair        String?
+  skin        String?
+  love        String?
+  weapon      String?
+  profession  String?
+  position    String?
+  predecessor String?
+  affiliation String?
+  first       String?
+  voiced      String?
+  nationality String?
+  ethnicity   String?
 }

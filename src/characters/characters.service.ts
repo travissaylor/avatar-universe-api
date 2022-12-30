@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
@@ -6,7 +6,10 @@ import { UpdateCharacterDto } from './dto/update-character.dto';
 
 @Injectable()
 export class CharactersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly logger: Logger,
+  ) {}
   create(createCharacterDto: CreateCharacterDto) {
     return 'This action adds a new character';
   }
@@ -16,7 +19,7 @@ export class CharactersService {
     skip?: number;
     orderBy?: Prisma.CharacterOrderByWithRelationInput;
   }) {
-    const { take, skip, orderBy } = params;
+    const { take = 10, skip, orderBy } = params;
     return await this.prisma.character.findMany({
       take: Number(take) || undefined,
       skip: Number(skip) || undefined,

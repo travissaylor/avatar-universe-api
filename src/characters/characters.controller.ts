@@ -8,12 +8,11 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 
-@Controller('characters')
+@Controller('character')
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
@@ -26,9 +25,13 @@ export class CharactersController {
   async find(
     @Query('take') take?: number,
     @Query('skip') skip?: number,
-    @Query('orderBy') orderBy?: Prisma.CharacterOrderByWithRelationInput,
+    @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
   ) {
-    return this.charactersService.find({ take, skip, orderBy });
+    return this.charactersService.find({
+      take,
+      skip,
+      orderBy: { id: orderBy },
+    });
   }
 
   @Get(':id')

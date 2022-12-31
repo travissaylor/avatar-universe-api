@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "avatar-universe-api",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Api that provides information about the avatar universe",
   "license": "MIT",
   "scripts": {
     "build": "nest build",

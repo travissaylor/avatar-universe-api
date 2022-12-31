@@ -9,6 +9,8 @@ export class EpisodeScraperRunner extends CommandRunner {
     super();
   }
   async run(): Promise<void> {
+    const theLastAirbenderEpisodes =
+      this.scraperService.getTheLastAirbenderEpisodeData();
     console.log('DONE');
   }
 }

@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpException,
-  Param,
-  ParseIntPipe,
-  Query,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ParseOptionalIntPipe } from 'src/util/parseOptionalInt.pipe';
 import { CharactersService } from './characters.service';
 
@@ -17,8 +8,8 @@ export class CharactersController {
 
   @Get()
   async find(
-    @Query('take') take = 10,
-    @Query('skip') skip?: number,
+    @Query('take', ParseOptionalIntPipe) take = 10,
+    @Query('skip', ParseOptionalIntPipe) skip?: number,
     @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
   ) {
     return await this.charactersService.find({
@@ -30,8 +21,8 @@ export class CharactersController {
 
   @Get('/avatar')
   async findAvatars(
-    @Query('take') take?: number,
-    @Query('skip') skip?: number,
+    @Query('take', ParseOptionalIntPipe) take?: number,
+    @Query('skip', ParseOptionalIntPipe) skip?: number,
     @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
   ) {
     return await this.charactersService.findAvatars({

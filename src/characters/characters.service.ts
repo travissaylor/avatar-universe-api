@@ -47,4 +47,24 @@ export class CharactersService {
       },
     });
   }
+
+  async findRandom(count: number) {
+    if (count === 0) {
+      return [];
+    }
+    const characterCount = await this.prisma.character.count();
+
+    const nums: Set<number> = new Set();
+    while (nums.size !== count) {
+      nums.add(Math.floor(Math.random() * characterCount) + 1);
+    }
+
+    return await this.prisma.character.findMany({
+      where: {
+        id: {
+          in: [...nums],
+        },
+      },
+    });
+  }
 }

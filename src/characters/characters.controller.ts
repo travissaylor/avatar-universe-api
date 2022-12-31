@@ -1,7 +1,17 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  ParseIntPipe,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ParseOptionalIntPipe } from 'src/util/parseOptionalInt.pipe';
 import { CharactersService } from './characters.service';
 
-@Controller('character')
+@Controller('characters')
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
@@ -11,7 +21,7 @@ export class CharactersController {
     @Query('skip') skip?: number,
     @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
   ) {
-    return this.charactersService.find({
+    return await this.charactersService.find({
       take,
       skip,
       orderBy: { id: orderBy },
@@ -24,15 +34,23 @@ export class CharactersController {
     @Query('skip') skip?: number,
     @Query('orderBy') orderBy: 'asc' | 'desc' = 'asc',
   ) {
-    return this.charactersService.findAvatars({
+    return await this.charactersService.findAvatars({
       take,
       skip,
       orderBy: { id: orderBy },
     });
   }
 
+  @Get('/random')
+  async findRandom(
+    @Query('count', ParseOptionalIntPipe)
+    count = 1,
+  ) {
+    return await this.charactersService.findRandom(count);
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.charactersService.findById(+id);
+  async findById(@Param('id') id: string) {
+    return await this.charactersService.findById(+id);
   }
 }

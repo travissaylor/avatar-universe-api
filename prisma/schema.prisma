@@ -30,3 +30,34 @@ model Character {
   nationality String?
   ethnicity   String?
 }
+
+model TvSeries {
+  id          Int       @id @default(autoincrement())
+  description String
+  start       String
+  end         String
+  seasons     Season[]
+  episodes    Episode[]
+}
+
+model Season {
+  id       Int       @id @default(autoincrement())
+  order    Int
+  title    String
+  seriesId Int
+  series   TvSeries  @relation(fields: [seriesId], references: [id])
+  episodes Episode[]
+}
+
+model Episode {
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  airDate       String
+  seasonEpisode Int
+  seriesEpisode Int
+  seriesId      Int
+  series        TvSeries @relation(fields: [seriesId], references: [id])
+  seasonId      Int
+  season        Season   @relation(fields: [seasonId], references: [id])
+}

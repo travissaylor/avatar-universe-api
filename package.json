@@ -79,6 +79,6 @@
     "testEnvironment": "node"
   },
   "prisma": {
-    "seed": "ts-node --esm prisma/seed.ts"
+    "seed": "npx ts-node src/command.ts seed-db"
   }
 }

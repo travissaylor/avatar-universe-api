@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { ParseOptionalIntPipe } from 'src/util/parseOptionalInt.pipe';
 import { CharactersService } from './characters.service';
 
@@ -41,7 +41,7 @@ export class CharactersController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string) {
-    return await this.charactersService.findById(+id);
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    return await this.charactersService.findById(id);
   }
 }

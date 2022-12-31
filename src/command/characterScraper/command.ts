@@ -1,11 +1,11 @@
 import { Command, CommandRunner } from 'nest-commander';
-import { ScraperService } from './scraper.service';
+import { CharacterScraperService } from './service';
 
 @Command({
-  name: 'scrape-seed-data',
+  name: 'scrape-character-data',
 })
-export class ScraperRunner extends CommandRunner {
-  constructor(private readonly scraperService: ScraperService) {
+export class CharacterScraperRunner extends CommandRunner {
+  constructor(private readonly scraperService: CharacterScraperService) {
     super();
   }
   async run(): Promise<void> {

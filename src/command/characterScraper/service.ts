@@ -3,15 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { Character } from '@prisma/client';
 import { load, CheerioAPI, Element } from 'cheerio';
 import * as fs from 'fs/promises';
-import * as path from 'path';
-// import pretty from 'pretty';
 
 @Injectable()
-export class ScraperService {
+export class CharacterScraperService {
   constructor(private readonly http: HttpService) {}
-  getHello(): string {
-    return 'Hello World!';
-  }
 
   async getNames() {
     const [chunk1, chunk2, chunk3] = await Promise.all([

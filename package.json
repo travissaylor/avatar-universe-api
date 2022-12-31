@@ -17,7 +17,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "scrape": "npx ts-node src/command.ts scrape-seed-data"
+    "scrape:characters": "npx ts-node src/command.ts scrape-character-data",
+    "scrape:episode": "npx ts-node src/command.ts scrape-episode-data"
   },
   "dependencies": {
     "@nestjs/axios": "^1.0.1",

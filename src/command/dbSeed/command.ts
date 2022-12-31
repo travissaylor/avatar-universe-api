@@ -9,7 +9,10 @@ export class DbSeedRunner extends CommandRunner {
     super();
   }
   async run(): Promise<void> {
-    this.seedService.seedCharacters();
+    const characters = await this.seedService.seedCharacters();
+    console.log('Characters Done', characters.length);
+    const tvSeries = await this.seedService.seedTvSeries();
+    console.log('Tv Series Done', tvSeries.length);
     console.log('DONE');
   }
 }

@@ -20,6 +20,18 @@ export class EpisodeScraperService {
     });
   }
 
+  async persistEpisodeData(episodeData: Episode[][]) {
+    try {
+      await fs.writeFile(
+        'prisma/episodes.json',
+        JSON.stringify(episodeData, null, 2),
+        'utf8',
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   private getEpisodesFromTable($: CheerioAPI, table: Element): Episode[] {
     const rows = $('tr', table).toArray();
     rows.shift();

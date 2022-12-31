@@ -33,6 +33,7 @@ model Character {
 
 model TvSeries {
   id          Int       @id @default(autoincrement())
+  title       String
   description String
   start       String
   end         String

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import * as characters from '../../../prisma/characters.json';
+import { tvSeriesData } from './entity';
 
 @Injectable()
 export class DbSeedService {
@@ -34,6 +35,14 @@ export class DbSeedService {
         });
         console.log(char.id);
         return char;
+      }),
+    );
+  }
+
+  async seedTvSeries() {
+    return await Promise.all(
+      tvSeriesData.map((series) => {
+        return this.prisma.tvSeries.create({ data: series });
       }),
     );
   }

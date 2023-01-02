@@ -34,6 +34,7 @@ model Character {
 model TvSeries {
   id          Int       @id @default(autoincrement())
   title       String
+  order       Int       @unique()
   description String
   start       String
   end         String
@@ -43,7 +44,7 @@ model TvSeries {
 
 model Season {
   id       Int       @id @default(autoincrement())
-  order    Int
+  order    Int       @unique()
   title    String
   seriesId Int
   series   TvSeries  @relation(fields: [seriesId], references: [id])

@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import * as characters from '../../../prisma/characters.json';
-import { tvSeriesData } from './entity';
+import * as episodeSeasonGrouping from '../../../prisma/episodes.json';
+import { seasonData, tvSeriesData } from './entity';
+import { Episode, Prisma } from '@prisma/client';
 
 @Injectable()
 export class DbSeedService {
@@ -39,10 +41,36 @@ export class DbSeedService {
     );
   }
 
-  async seedTvSeries() {
+  async seedTvSeriesAndSeasons() {
     return await Promise.all(
       tvSeriesData.map((series) => {
         return this.prisma.tvSeries.create({ data: series });
+      }),
+    );
+  }
+
+  async seedEpisodes() {
+    const episodes: Prisma.EpisodeCreateInput[] = [];
+
+    episodeSeasonGrouping.forEach((season, seasonIndex) => {
+      season.forEach((episode) => {
+        episodes.push({
+          ...episode,
+          season: {
+            connect: { order: seasonIndex + 1 },
+          },
+          series: {
+            connect: { order: 1 },
+          },
+        });
+      });
+    });
+
+    return await Promise.all(
+      episodes.map(async (episode) => {
+        return await this.prisma.episode.create({
+          data: episode,
+        });
       }),
     );
   }

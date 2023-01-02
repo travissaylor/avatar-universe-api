@@ -2,7 +2,7 @@ import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { ParseOptionalIntPipe } from 'src/util/parseOptionalInt.pipe';
 import { CharactersService } from './characters.service';
 
-@Controller('characters')
+@Controller({ path: 'characters', version: '1' })
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 

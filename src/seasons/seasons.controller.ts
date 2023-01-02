@@ -2,7 +2,7 @@ import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { ParseOptionalIntPipe } from 'src/util/parseOptionalInt.pipe';
 import { SeasonsService } from './seasons.service';
 
-@Controller('seasons')
+@Controller({ path: 'seasons', version: '1' })
 export class SeasonsController {
   constructor(private readonly seasonsService: SeasonsService) {}
 

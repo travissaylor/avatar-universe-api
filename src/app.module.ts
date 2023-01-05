@@ -1,14 +1,26 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CharactersModule } from './characters/characters.module';
 import { TvSeriesModule } from './tv-series/tv-series.module';
 import { SeasonsModule } from './seasons/seasons.module';
 import { EpisodesModule } from './episodes/episodes.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthMiddleware } from './middleware/auth.middleware';
 
 @Module({
-  imports: [CharactersModule, TvSeriesModule, SeasonsModule, EpisodesModule],
+  imports: [
+    CharactersModule,
+    TvSeriesModule,
+    SeasonsModule,
+    EpisodesModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('');
+  }
+}

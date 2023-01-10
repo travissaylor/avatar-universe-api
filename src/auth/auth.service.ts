@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { generateApiKey } from 'generate-api-key';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class AuthService {
+
+  constructor(private readonly prisma: PrismaService) {}
   // KEYS
   private apiKeys: string[] = [
     'ca03na188ame03u1d78620de67282882a84',
@@ -9,5 +13,9 @@ export class AuthService {
   ];
   validateApiKey(apiKey: string): string | undefined {
     return this.apiKeys.find((apiK) => apiKey === apiK); // @todo get keys from db
+  }
+
+  async createApiKey() {
+    const newKey = generateApiKey();
   }
 }

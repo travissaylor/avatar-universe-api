@@ -1,7 +1,9 @@
 import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ParseOptionalIntPipe } from 'src/util/parseOptionalInt.pipe';
 import { SeasonsService } from './seasons.service';
 
+@ApiTags('seasons')
 @Controller({ path: 'seasons', version: '1' })
 export class SeasonsController {
   constructor(private readonly seasonsService: SeasonsService) {}
